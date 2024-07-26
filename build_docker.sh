@@ -93,7 +93,7 @@ for (( i=$retry_times; i>0; i-- )); do
             docker_try_rmi $docker_image_name  # Remove the exist image
             if [[ $i -eq 1 ]]; then
                 echo "Failed to build container [$docker_image_name] in $retry_times times, exit. "
-                rm -rf $DOCKER_BUILD_DIR
+                rm -rf $DOCKER_BUILD_DIR/deps
                 exit $ret_code
             else
                 echo "Failed to build container [$docker_image_name], retry. "
@@ -106,7 +106,7 @@ for (( i=$retry_times; i>0; i-- )); do
             ;;
         # Docker build got error
         *)
-            rm -rf $DOCKER_BUILD_DIR # Replace the trap_up function
+            rm -rf $DOCKER_BUILD_DIR/deps # Replace the trap_up function
             exit $ret_code ;;
     esac
 done
